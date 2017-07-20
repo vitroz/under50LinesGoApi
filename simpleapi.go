@@ -17,6 +17,7 @@ var (
 )
 
 func main(){
+
 	flag.Parse()
 	data = map[string]string{}
 	r := httprouter.New() //Criando as rotas
@@ -24,12 +25,16 @@ func main(){
 	r.GET("/list", show)
 	r.PUT("/entry/:key/:value", update)
 	r.DELETE("/entry/:key", del)
+
+	r.NotFound = http.FileServer(http.Dir("site/"))
+
 	err := http.ListenAndServe(*addr, r) // Starting the server
 
 	if err != nil {
 		log.Fatal("ListenAndServe", err)
 	}
 }
+
 
 func show(w http.ResponseWriter, r *http.Request, p httprouter.Params){
 	k := p.ByName("key")

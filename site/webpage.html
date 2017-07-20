@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GoLang API</title>
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+	<h3>List</h3>
+	<div id="list">
+		
+	</div>
+
+</body>
+</html>
+
+    <script src="assets/js/jquery-3.1.1.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$.get( "localhost:8084/list", function( data ) {
+	  alert( "Data Loaded: " + data );
+	});
+</script>
