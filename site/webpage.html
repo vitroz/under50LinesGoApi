@@ -6,9 +6,30 @@
         <link href="assets/css/bootstrap-theme.min.css" rel="stylesheet">
 </head>
 <body>
-	<h3>List</h3>
-	<div id="list">
-		
+	<div class="container">
+		<h1>GoLang Simple API</h1>
+		<hr />
+	</div>
+	<div class="container">
+		<div class="col-xs-3">
+			<h3>Item</h3>
+			<input class="form-control" type="text" id="item">
+			<button class="btn-lg btn-primary" id="addBtn" style="margin-top:10px">Add</button>	
+		</div>		
+		<div class="col-xs-9">
+			<h3>List</h3>
+				<button id="btnShow" class="btn-lg btn-success">Show List</button>			
+			<div id="list" style="border:1px;margin-top:20px;font-size:3em">
+				
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="col-xs-3">
+			<h3>Delete</h3>
+			<input class="form-control" type="text" id="keyDel" placeholder="key">
+			<button class="btn-lg btn-danger" id="delBtn" style="margin-top:10px">Delete</button>			
+		</div>
 	</div>
 
 </body>
@@ -18,7 +39,46 @@
     <script src="assets/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-	$.get( "localhost:8084/list", function( data ) {
-	  alert( "Data Loaded: " + data );
+
+	function show(){
+		$.get( "http://localhost:8083/list", function( data ) {
+		  $('#list').html('');
+		  if(Object.keys(data).length == 0){
+		  	$('#list').append('Empty List');
+		  }else{
+			  for(key in data){
+				  $('#list').append("key -> "+key+" value: "+data[key] + "<br>");		  	
+			  }		  	
+		  }	
+		});	
+	}
+
+	$('#addBtn').click(function(){
+		randomNum = Math.floor((Math.random() * 10000) + 1);
+		value = $('#item').val();
+		$.ajax({
+		    url: 'http://localhost:8083/entry/'+randomNum+'/'+value,
+		    type: 'put',
+		    success: function(result) {
+		        console.log(result);
+		        show();
+		    }
+		});
+	});
+
+	$('#delBtn').click(function(){
+		key = $('#keyDel').val();
+		$.ajax({
+		    url: 'http://localhost:8083/entry/'+key,
+		    type: 'delete',
+		    success: function(result) {
+		        console.log(result);
+		        show();
+		    }
+		});		
+	});
+
+	$('#btnShow').click(function(){
+		show();
 	});
 </script>
