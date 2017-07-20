@@ -30,6 +30,9 @@ Open a new terminal window, and test it by using curl:
   DELETE
   
   curl -X DELETE localhost:8083/entry/first
+  
+  OR! You can always use the webpage included in the project. 
+  It consumes all of API's implemented functions.
 
 
   No database! So the entries only last until the server is alive :)
